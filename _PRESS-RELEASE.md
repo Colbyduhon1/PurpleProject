@@ -18,27 +18,36 @@ Once the project moves into development, the press release can be used as a touc
  
 ## Heading ##
   > Name the product in a way the reader (i.e. your target customers) will understand.
+  Red, Purple, and Blue
 
 ## Sub-Heading ##
   > Describe who the market for the product is and what benefit they get. One sentence only underneath the title.
+  For any person who wants to become more civically aware and know the polictical climate of the area he/she lies in.
 
 ## Summary ##
   > Give a summary of the product and the benefit. Assume the reader will not read anything else so make this paragraph good.
+  Knowledge is power. Want to know the political environment of the area you live in?  Red, Purple, and Blue will give you insight into the political environment you live in.
 
 ## Problem ##
   > Describe the problem your product solves.
+  Enables an individual to see if he/she is the political majority or minority where he lives.
 
 ## Solution ##
   > Describe how your product elegantly solves the problem.
+  By simplifying the process into a simple address enter, one can get a quick snapshot of the political environment of his area.
 
 ## Quote from You ##
   > A quote from a spokesperson in your company.
+  "There's always this discussion or red vs. blue America. We wanted to give people the opportunity to see this for themselves"
 
 ## How to Get Started ##
   > Describe how easy it is to get started.
+  With a simple address input, a wealth of relevant information is made available.
 
 ## Customer Quote ##
   > Provide a quote from a hypothetical customer that describes how they experienced the benefit.
+  "I learned a great deal about who represents me in the government with this tool"
 
 ## Closing and Call to Action ##
   > Wrap it up and give pointers where the reader should go next.
+  To learn more for yourself just enter your address and you can learn what is the color of the map where you live.

@@ -11,15 +11,15 @@ db.once('open', function() {
   console.log('mongoose connected successfully');
 });
 
-var itemSchema = mongoose.Schema({
-  quantity: Number,
-  description: String
+var representativeSchema = mongoose.Schema({
+  representativeName: String,
+  representativeParty: String
 });
 
-var Item = mongoose.model('Item', itemSchema);
+var Representative = mongoose.model('Representative', representativeSchema);
 
 var selectAll = function(callback) {
-  Item.find({}, function(err, items) {
+  Representative.find({}, function(err, items) {
     if(err) {
       callback(err, null);
     } else {
@@ -28,4 +28,4 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+module.exports.Representative = Representative;
