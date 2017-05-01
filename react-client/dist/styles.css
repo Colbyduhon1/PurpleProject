@@ -1,0 +1,56 @@
+body{
+	text-align: center;
+}
+
+
+#heading{
+	color: purple;
+	text-align: center;
+	font-size: 600%;
+}
+
+#Republican{
+	color: red;
+	font-size: 300%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#Democrat{
+	color: blue;
+	font-size: 300%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#Independent{
+	color: purple;
+	font-size: 300%;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#input{
+	width: 200px;
+}
+
+#button{
+}
+
+#prompt1{
+	font-size: 200%;
+}
+
+#prompt2{
+	font-size: 100%;
+}
+
+.officeGroup{
+	font-weight: bold;
+	font-size: 150%;
+}
+
+li{
+	vertical-align: middle;
+	text-align: left; 
+}

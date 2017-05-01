@@ -5,11 +5,6 @@ var fs = Promise.promisifyAll(require("fs"));
 var request = require('request');
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
  var db = require('../database-mongo');
- var cors = require('cors')
-
-var app = express()
-//app.use(cors())
-
 var app = express();
 
 app.use(express.static(__dirname + '/../react-client/dist'));
@@ -47,35 +42,23 @@ app.post('/items/import', function (req, res){
 
 app.get('/items', function (req, res) {
 	var partyCounts = {};
- // Model.find().count(function(err, count){
-  //  console.log("Number of docs: ", count );
-//});db.selectAll(function(err, data) {
-   // if(err) {
-     // res.sendStatus(500);
-    //} else {
-     // res.json(data);
-   // }
-  //});
   db.Representative.find({}, function(error, data){
   	partyCounts['count'] = data.length;
     console.log(data);
 	})
   .then(db.Representative.count({representativeParty: 'Republican'}, function(error, republicanData){
-  	console.log("************************Repubs" + republicanData)
   	 RepublicanCount = republicanData;
   	partyCounts['Republican'] = RepublicanCount;
   }))
   .then(db.Representative.count({representativeParty: 'Democratic'}, function(error, democraticData){
-  	console.log("************************Dems" + democraticData)
   	 DemocraticCount = democraticData;
   	partyCounts['Democratic'] = DemocraticCount;
   }))
  .then(db.Representative.find({}).count(function(error, allDataCount){
  	console.log('ALL DATA COUNT:' + partyCounts['count']);
  	var IndependentCount = partyCounts['count'] - (partyCounts['Republican'] + partyCounts['Democratic']);
-  	//console.log("************************" + IndependentCount)
   	partyCounts['Independent'] = IndependentCount;
-    res.send(partyCounts);
+  res.send(partyCounts);
   }))
   .then(db.Representative.remove({}, function(error, data){
 	}));
