@@ -33,36 +33,52 @@ app.post('/items/import', function (req, res){
 			};
 
 			let entry = new db.Representative(representativeData);
-			entry.save(function(err,results){
-				if(error){
-        			res.json(error);
-    					}
-   				 else{
-        			res.json(data);
-  				  }
+			entry.save(function(err){
+			if (err) { 
+				//res.send(err) 
+			}
 			});
 			console.log(official.name, official.party)
 		});
 	 });
-	//.then((data) => {
-	//	console.log(JSON.parse(data));
-	//	res.end(JSON.parse(data));
-	//	})
-	//.error((err) => {
-	//	console.log(err);
-	//});
 	console.log(req.body.address);
 	res.end();
 });
 
 app.get('/items', function (req, res) {
-  items.selectAll(function(err, data) {
-    if(err) {
-      res.sendStatus(500);
-    } else {
-      res.json(data);
-    }
-  });
+	var partyCounts = {};
+ // Model.find().count(function(err, count){
+  //  console.log("Number of docs: ", count );
+//});db.selectAll(function(err, data) {
+   // if(err) {
+     // res.sendStatus(500);
+    //} else {
+     // res.json(data);
+   // }
+  //});
+  db.Representative.find({}, function(error, data){
+  	partyCounts['count'] = data.length;
+    console.log(data);
+	})
+  .then(db.Representative.count({representativeParty: 'Republican'}, function(error, republicanData){
+  	console.log("************************Repubs" + republicanData)
+  	 RepublicanCount = republicanData;
+  	partyCounts['Republican'] = RepublicanCount;
+  }))
+  .then(db.Representative.count({representativeParty: 'Democratic'}, function(error, democraticData){
+  	console.log("************************Dems" + democraticData)
+  	 DemocraticCount = democraticData;
+  	partyCounts['Democratic'] = DemocraticCount;
+  }))
+ .then(db.Representative.find({}).count(function(error, allDataCount){
+ 	console.log('ALL DATA COUNT:' + partyCounts['count']);
+ 	var IndependentCount = partyCounts['count'] - (partyCounts['Republican'] + partyCounts['Democratic']);
+  	//console.log("************************" + IndependentCount)
+  	partyCounts['Independent'] = IndependentCount;
+    res.send(partyCounts);
+  }))
+  .then(db.Representative.remove({}, function(error, data){
+	}));
 });
 
 

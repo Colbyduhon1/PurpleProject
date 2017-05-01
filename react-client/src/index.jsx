@@ -21,7 +21,7 @@ class App extends React.Component {
       url: '/items/import',
       data: {address: address},
       success: function(data, status){
-        console.log("DATA" + data);
+        console.log("DATA" )
         console.log('Post successful');
       },
       error: function(err){

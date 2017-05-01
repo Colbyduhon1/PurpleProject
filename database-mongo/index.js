@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost/test');
 
 var db = mongoose.connection;
@@ -12,9 +13,10 @@ db.once('open', function() {
 });
 
 var representativeSchema = mongoose.Schema({
-  representativeName: String,
+  representativeName: {type:String, unique: true},
   representativeParty: String
 });
+
 
 var Representative = mongoose.model('Representative', representativeSchema);
 
@@ -29,3 +31,4 @@ var selectAll = function(callback) {
 };
 
 module.exports.Representative = Representative;
+module.exports.selectAll = selectAll;
