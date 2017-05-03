@@ -8,7 +8,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      item: []
+      item: [],
     }
   }
 
@@ -19,18 +19,14 @@ class App extends React.Component {
     $.ajax({
       method: "POST",
       url: '/items/import',
-      data: {address: address},
-      success: function(data, status){
-        console.log('Post successful');
-      },
-      error: function(err){
-        console.log('Post failed')
-      }
+      data: {address: address}
     })
   .then($.ajax({
-      url: '/items', 
+      url: '/items',
+      method: 'GET',
       success: (data) => {
-        console.log('RETRIVIENG')
+        console.log('Going to get now')
+        console.dir(data);
         this.setState({
           item: data
         })
@@ -47,6 +43,7 @@ class App extends React.Component {
       <h1 id='heading'>Purple</h1>
       <SearchBar onSearch={this.search.bind(this)}/>
       <ListItem item={this.state.item}/>
+    }
     </div>)
   }
 }

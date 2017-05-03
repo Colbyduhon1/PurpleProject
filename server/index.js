@@ -16,8 +16,8 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 app.post('/items/import', function (req, res){
-	console.log("calling API")
 	var GoogleAPIUrl = "https://www.googleapis.com/civicinfo/v2/representatives?key=AIzaSyDiPxMHLHy_owRvZY-qBU-Umon1cCJES9I&address=" + req.body.address;
+	var array = [];
 	request(GoogleAPIUrl, function(error,response,body){
 		var data = JSON.parse(body)
 		var officials = data.officials;
@@ -28,23 +28,26 @@ app.post('/items/import', function (req, res){
 			};
 
 			let entry = new db.Representative(representativeData);
-			entry.save(function(err){
-			if (err) { 
-				//res.send(err) 
-			}
-			});
-			console.log(official.name, official.party)
+			// add the entry to the arry youre bulding
+			array.push(entry);
 		});
+		console.log(array);
+		db.Representative.create(array, function(err, entries) {
+				if (err) { 
+					res.send(err) 
+				}
+				else {
+					console.log('entrieees' + entries)
+					res.end();
+				}
+			});
 	 });
-	console.log(req.body.address);
-	res.end();
 });
 
 app.get('/items', function (req, res) {
 	var partyCounts = {};
   db.Representative.find({}, function(error, data){
   	partyCounts['count'] = data.length;
-    console.log(data);
 	})
   .then(db.Representative.count({representativeParty: 'Republican'}, function(error, republicanData){
   	 RepublicanCount = republicanData;
@@ -58,7 +61,9 @@ app.get('/items', function (req, res) {
  	console.log('ALL DATA COUNT:' + partyCounts['count']);
  	var IndependentCount = partyCounts['count'] - (partyCounts['Republican'] + partyCounts['Democratic']);
   	partyCounts['Independent'] = IndependentCount;
-  res.send(partyCounts);
+  	console.log('Sending data');
+  	res.send(partyCounts);
+  	console.log('data sent');
   }))
   .then(db.Representative.remove({}, function(error, data){
 	}));

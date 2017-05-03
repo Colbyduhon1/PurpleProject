@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "angular": "^1.6.3",
+    "bluebird": "^3.5.0",
     "body-parser": "^1.17.1",
     "cors": "^2.8.3",
     "express": "^4.15.0",

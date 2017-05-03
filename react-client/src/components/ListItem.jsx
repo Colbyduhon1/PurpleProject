@@ -3,9 +3,9 @@ import React from 'react';
 
 const ListItem = (props) => (
   <div>
-  <ol id ='Republican'>	Republican:  {((props.item.Republican/props.item.count)*100).toPrecision(2)}% (or {props.item.Republican} Representatives)</ol>
-  <ol id = 'Democrat'>	Democrat:  {((props.item.Democratic/props.item.count)*100).toPrecision(2)}% (or {props.item.Democratic} Representatives)</ol>
-  <ol id = 'Independent'> Independent/Unaffiliated: {((props.item.Independent/props.item.count)*100).toPrecision(2)}% (or {props.item.Independent} Representatives)</ol>
+  <ol id ='Republican'>	Republican:  {((props.item.Republican/props.item.count)*100).toPrecision(2) === "NaN" ? 0 : ((props.item.Republican/props.item.count)*100).toPrecision(2) }% (or {(props.item.Republican) === undefined ? 0 :(props.item.Republican)} Representatives)</ol>
+  <ol id = 'Democrat'>	Democrat:  {((props.item.Democratic/props.item.count)*100).toPrecision(2)=== "NaN" ? 0 : ((props.item.Democratic/props.item.count)*100).toPrecision(2)}% (or {(props.item.Democratic) === undefined ? 0 :(props.item.Democratic)} Representatives)</ol>
+  <ol id = 'Independent'> Independent/Unaffiliated: {((props.item.Independent/props.item.count)*100).toPrecision(2)=== "NaN" ? 0 : ((props.item.Independent/props.item.count)*100).toPrecision(2)}% (or {(props.item.Independent)=== undefined ? 0 :(props.item.Independent)} Representatives)</ol>
   	<div id = 'list'> Note that the offices taillied are the following:
   	<div className = 'officeGroup'>Federal</div>
 	  	<li>President of the United States</li>
