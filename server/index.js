@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var Promise = require('bluebird');
 var fs = Promise.promisifyAll(require("fs"));
 var request = require('request');
+var async = require('async');
 // UNCOMMENT THE DATABASE YOU'D LIKE TO USE
  var db = require('../database-mongo');
 var app = express();
@@ -37,37 +38,59 @@ app.post('/items/import', function (req, res){
 					res.send(err) 
 				}
 				else {
-					console.log('entrieees' + entries)
+	
 					res.end();
 				}
 			});
 	 });
 });
 
+
+
 app.get('/items', function (req, res) {
-	var partyCounts = {};
-  db.Representative.find({}, function(error, data){
-  	partyCounts['count'] = data.length;
-	})
-  .then(db.Representative.count({representativeParty: 'Republican'}, function(error, republicanData){
-  	 RepublicanCount = republicanData;
-  	partyCounts['Republican'] = RepublicanCount;
-  }))
-  .then(db.Representative.count({representativeParty: 'Democratic'}, function(error, democraticData){
-  	 DemocraticCount = democraticData;
-  	partyCounts['Democratic'] = DemocraticCount;
-  }))
- .then(db.Representative.find({}).count(function(error, allDataCount){
+
+let partyCounts = {};
+
+async.parallel({
+	count: function(callback) {
+  	return db.Representative.find({}, function(err, data){
+  		return  callback(err,data.length);
+	});
+  },
+  	Republican: function(callback){
+  		return db.Representative.count({representativeParty: 'Republican'}, function(err, data){
+  			return callback(err, data);
+  		});
+  	},
+  	Democratic: function(callback){
+  		 return db.Representative.count({representativeParty: 'Democratic'}, function(err, data){
+  		 	return callback(err, data);
+  	});
+  	},
+  	Independent: function(callback){
+		return db.Representative.count( {$nor: [{representativeParty: 'Democratic'},{representativeParty: 'Republican'}]} , function(err, data){
+  		 	return callback(err,data);
+  	});
+	}
+}, function(err, partyCounts){
+  	return res.json(partyCounts);
+  })
+})
+
+  	/*
+
+ db.Representative.find({}).count(function(error, allDataCount){
  	console.log('ALL DATA COUNT:' + partyCounts['count']);
- 	var IndependentCount = partyCounts['count'] - (partyCounts['Republican'] + partyCounts['Democratic']);
+ 	var IndependentCount = partyCounts['count'] - ((partyCounts['Republican'] + partyCounts['Democratic']));
   	partyCounts['Independent'] = IndependentCount;
+  	console.log(partyCounts);
   	console.log('Sending data');
-  	res.send(partyCounts);
   	console.log('data sent');
-  }))
+  	res.send(partyCounts);
+  })
   .then(db.Representative.remove({}, function(error, data){
 	}));
-});
+});*/
 
 
 app.listen(3000, function() {

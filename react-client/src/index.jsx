@@ -33,7 +33,6 @@ class App extends React.Component {
 
 fetch () {
     $.ajax({
-      url: app.server,
       url: '/items',
       method: 'GET',
       success: (data) => {
