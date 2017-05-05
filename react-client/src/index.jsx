@@ -19,9 +19,21 @@ class App extends React.Component {
     $.ajax({
       method: "POST",
       url: '/items/import',
-      data: {address: address}
+      data: {address: address},
+      success: (data) => {
+      console.log('Data posted')
+      this.fetch();
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
     })
-  .then($.ajax({
+  }
+
+
+fetch () {
+    $.ajax({
+      url: app.server,
       url: '/items',
       method: 'GET',
       success: (data) => {
@@ -31,12 +43,11 @@ class App extends React.Component {
           item: data
         })
       },
-      error: (err) => {
-        console.log('err', err);
+      error: function(error) {
+        console.error('chatterbox: Failed to fetch messages', error);
       }
-    }));
+    });
   }
-
 
   render () {
     return (<div>
